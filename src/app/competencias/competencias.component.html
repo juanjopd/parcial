@@ -1,0 +1,84 @@
+<div class="contenedor">
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="nombre">Competencia</label>
+            <input type="text" class="form-control" placeholder="competencia" [(ngModel)]="nombre">
+        </div>
+        <div class="col-sm-3">
+            <label for="descripcionCompetencia">Descripcion</label>
+            <input type="text" class="form-control" [(ngModel)]="descripcionCompetencia">
+        </div>
+    </div>
+    <input type="button" value="Agregar competencia" class="btn btn-dark" (click)="agregarCompetencia()">
+</div>
+<br>
+<br>
+<table mdbTable>
+    <thead>
+        <tr>
+            <th *ngFor="let head of headElements" scope="col">{{head}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let competencia of competencias">
+            <th scope=" row">{{competencia.id}}</th>
+            <td>{{competencia.nombre}}</td>
+            <td>{{competencia.descripcionCompetencia}}</td>
+            <td><button class="btn btn-primary" (click)="triggerModal(modalData2)">Ver comportamientos</button>
+                <!--(click)="triggerModal(modalData)" -->
+                <ng-template #modalData2 let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">Ver comporatmienos de la competencia N°{{competencia.id}}
+                        </h4>
+                        <button type="button" class="close btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                          <span aria-hidden="true">X</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container" style="margin-top: 2%">
+                            <thead>
+                                <tr>
+                                    <th *ngFor="let head of headElements2" scope="col">{{head}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{descripcionComportamiento}}</td>
+                                    <td>{{porcentajePeso}}</td>
+                                </tr>
+                            </tbody>
+                        </div>
+                    </div>
+                </ng-template>
+            </td>
+            <td>
+                <button class="btn btn-success" (click)="triggerModal(modalData)">Agregar comportamiento</button>
+                <ng-template #modalData let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">Agregar comportamiento a la competencia N°{{competencia.id}}
+                        </h4>
+                        <button type="button" class="close btn btn-danger" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">X</span>
+              </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container" style="margin-top: 5%">
+                            Comportamiento:
+                            <input type="text" class="form-control" placeholder="Nombre del comportamiento" [(ngModel)]="descripcionComportamiento">
+                        </div>
+                        <div class="container" style="margin-top: 5%">
+                            Porcentaje:
+                            <input type="number" class="form-control" placeholder="Porcentaje" [(ngModel)]="porcentajePeso">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" (click)="modal.close(agregarComportamiento())">Guardar</button>
+                    </div>
+                </ng-template>
+            </td>
+            <td>
+                <input type="button" value="Eliminar campos" class="btn btn-outline-danger" (click)="borrarCompetencia()">
+            </td>
+    </tbody>
+</table>
+<p *ngIf="siExisten">No existen competencias agregadas</p>
